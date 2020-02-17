@@ -1,17 +1,13 @@
+
 #include<iostream>
 #include "linkedlist.h"
-#include<stddef.h>
 using namespace std;
-
-
 List::List(){
 	HEAD = NULL;
 	TAIL = NULL;
 	
 }
-
 List::~List(){}
-
 bool List::isEmpty(){
 	if (HEAD==NULL && TAIL == NULL){
 		return true;
@@ -21,32 +17,46 @@ bool List::isEmpty(){
 		return false;
 		}
 }
+bool List::isFull(){
+	int p=0;
+		Node* temp = HEAD;
+	
+	while(temp!=NULL){
+		p++;
+		temp = temp-> next;
+		if(temp==HEAD){
+		    break;
+		}
+		
+	}
+	if(p<maxSize)
+		return false;
+	else
+		return true;
+}
 
 void List::addToHead(int data){
 	Node* newNode= new Node();
 	newNode ->info = data;
-	newNode ->next = HEAD;
+	newNode ->next = NULL;
 	HEAD = newNode;
-	if(TAIL==NULL)
+	if(TAIL==NULL){
 		TAIL= HEAD;
-/*	Node* temp = HEAD;
-	while(temp->next!=NULL){
-		temp = temp -> next;
 	}
-	temp -> next = HEAD;
+} 
+void List::addToTail(int data){
+	Node* newnode = new Node();
+	newnode->info = data;
+	newnode->next = NULL;
+	TAIL->next = newnode;
+	TAIL = newnode;
 	
-*/
-}  
-
-void List::traverse(){
-	Node* temp = HEAD;
-	
-	while(temp!=NULL){
-		cout<< temp->info<< "   ";
-		temp = temp-> next;
-		
-		
-	}
+    if(HEAD==NULL){
+        HEAD=TAIL;
+    }
+    else{
+        TAIL->next = HEAD;
+    }
 	
 }
 int List::removeFromHead(){
@@ -54,83 +64,61 @@ int List::removeFromHead(){
 	nodeToDelete =HEAD;
 	int num = HEAD->info;
 	HEAD = nodeToDelete->next;
+	TAIL->next = HEAD;
 	return num;
+}
+void List::traverse(){
+	Node* temp = HEAD;
+	
+	while(temp!=NULL){
+		cout<< temp->info<<"\t";
+		temp = temp-> next;
+		if(temp==HEAD){
+		    return;
+		}
+		
+	}
+	
 }
 
 int List::showHead(){
-	int num = HEAD->info;
-	return num;
+	return HEAD-> info;
 }
-
-bool List::retrieve(int data, Node * &outputptr) {
-		Node* p = new Node();
-	p = HEAD;
-	while (p != NULL && p->info != data) {
-		p = p->next;
-	}
-	if (p == NULL)	return false;
-	else {
-		outputptr = p;
-		return true;
-	}
+int List::showTail(){
+	return TAIL -> info;
 }
-int List::showNext(Node* outputptr){
-	Node* ptr = outputptr->next;
-	int data = ptr -> info;
-	return data;
-}
-
-int main(){
-	Node* ptr = new Node();
-	List list1;
-	for (int i = 50; i <= 60; i += 2) {
-		list1.addToHead(i);
+//main function
+int main(){	
+//IMPLEMENTING QUEUE
+	cout<<"\nQueue Implementation:"<<endl;
+	Queue qu;
+	qu.isEmpty();
+	qu.enqueuetohead(4);
+	qu.dequeue();
+	for(int i=1;i<15;i++){
+		if(qu.isFull() == false)
+			qu.enqueue(i);
+		else{
+			cout<<"Queue is full !";
+			break;
+		}
+			
 	}
-	if(list1.isEmpty()==true)
-		cout<<"LISt Empty"<<endl;
+	//qu.isFull();
+	if(qu.isFull() == true)
+		cout<<" queue full  ";
 	else
-		cout<<"Not empty"<<endl;
+		cout<<"Not full ";
 	
-	list1.traverse();
-	list1.retrieve(54, ptr);
-	cout<<list1.showNext(ptr);
-/*	list1.addToHead(55);
-	list1.addToHead(46);
-	list1.addToHead(85);
-	list1.addToHead(155);
-	list1.traverse();
-	list1.remove(55);
-	list1.removeFromHead();
-	list1.search(56);
-	list1.addToTail(88);
-	list1.retrieve(52, ptr);
-	list1.add(7, ptr);
-	list1.traverse();
-	//cout<<list1.removeFromTail();
-//IMPLEMETING STACK 
-	cout<<" STACK  /n Implementing stack:"<<endl;
-	Stack stack;
-	stack.isEmpty();
-	for(int i=2;i<10;i+=2)
-		stack.push(i);
-	cout<<stack.top()<<endl;
-	cout<<stack.top()<<endl;
-	cout<<stack.pop()<<endl;
-	cout<<stack.pop()<<endl;
-	stack.isEmpty();
-//implementing queue
-	cout<<"Queue Implementation:"<<endl;
-	Queue queue;
-	queue.isEmpty();
-	queue.enqueue(102);
-	queue.enqueue(103);
-	queue.enqueue(104);
-	queue.dequeue();
-	queue.isEmpty();
-	queue.showitems();
+	//qu.dequeue();
 	
-	*/
-	return 0;
+	qu.isEmpty();
+	qu.showitems();
+	cout<<"\n Rear and front:";
+	cout<<qu.rear()<<"  ";
+	cout<< qu.front();
 	
-	
+	return 0;	
 }
+
+

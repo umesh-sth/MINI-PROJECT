@@ -1,3 +1,4 @@
+#define maxSize 7
 #include<iostream>
 class Node{
 	 public:
@@ -17,17 +18,14 @@ class List{
 		
 		bool isEmpty();
 		void addToHead(int data);
-		void traverse();
-		void remove(int data);
-		int removeFromHead();
-		bool search(int data);
 		void addToTail(int data);
-		void add(int data, Node* predessor);
-		bool retrieve ( int data, Node* &outputptr);
+		int removeFromHead();
+		bool isFull();
+		void traverse();
+		int itemHead();
 		int showHead();
-		int showNext(Node* outputptr);
+		int showTail();
 };
-
 class Queue{
 	private:
 		List l;
@@ -37,11 +35,22 @@ class Queue{
 			if(a==true)
 			std::cout<<"Queue Empty"<<std::endl;
 			else
-			std::cout<<"Queue not Empty!"<<std::endl;
+			std::cout<<"Queue Not Empty!"<<std::endl;
 			
 		}
-		void enqueue(int data){
+		bool isFull(){
+			
+			if(l.isFull()== true)
+				return true;
+			else
+				return false;
+			
+		}
+		void enqueuetohead(int data){
 			l.addToHead(data);
+		}
+		void enqueue(int data){
+			l.addToTail(data);
 		}
 		void dequeue (){
 			l.removeFromHead();
@@ -50,4 +59,12 @@ class Queue{
 		void showitems(){
 			l.traverse();
 		}
+		int rear(){
+			l.showTail();
+		}
+		int front(){
+			l.showHead();
+		}
 };
+
+
