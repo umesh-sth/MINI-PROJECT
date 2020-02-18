@@ -38,7 +38,7 @@ bool List::isFull(){
 void List::addToHead(int data){
 	Node* newNode= new Node();
 	newNode ->info = data;
-	newNode ->next = HEAD;
+	newNode ->next = NULL;
 	HEAD = newNode;
 	if(TAIL==NULL){
 		TAIL= HEAD;
